@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	<title>Task Master</title>
+
+	<style type="text/css">
+
+		#hero{
+			width: 100%;
+			background-color: #05445E;
+			color: white;
+			text-align: center;
+			padding-top: 0.5%;
+			padding-bottom: 0.5%;
+			margin: 0;
+			font-size: 120%;
+			display: block;
+		}
+
+		.tasks{
+			padding-top: 2%;
+		}
+
+		table{
+			font-family: Arial, Helvetica, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+			align-items: center;
+
+		}
+
+		@media(min-width: 540px){
+			table{
+				width: 85%;
+				font-family: Arial, Helvetica, sans-serif;
+				border-collapse: collapse;
+			}
+		}
+
+		@media(min-width: 992px){
+			table{
+				width: 65%;
+				font-family: Arial, Helvetica, sans-serif;
+				border-collapse: collapse;
+			}
+		}
+
+		td,th {
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
+
+		tr:nth-child(even){background-color: #f2f2f2;}
+
+		tr:nth-child(odd){background-color: white;}
+
+		tr:hover {background-color: #ddd;}
+
+		th {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			text-align: left;
+			background-color: #75E6DA;
+			color: black;
+		}
+
+		#adding{
+			margin-top: 3%;
+		}
+
+		input{
+			font-size:120%;
+		}
+
+		button {
+		  background-color: #05445E;
+		  border: none;
+		  padding: 7px 16px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 8px;
+		  margin: 4px 2px;
+		  cursor: pointer;
+		}
+
+		@media(min-width: 992px){
+			button {
+			  background-color: #05445E;
+			  border: none;
+			  padding: 14px 30px;
+			  text-align: center;
+			  text-decoration: none;
+			  display: inline-block;
+			  font-size: 12px;
+			  margin: 4px 2px;
+			  cursor: pointer;
+			}
+		}
+
+		a{
+			text-decoration: none;
+			color: white;
+		}
+
+		button:hover {
+			background-color: #189AB4;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<div class="content">
+		<div id="hero">
+			<h1>Task Master</h1>
+		</div>
+
+		<div class="form" id="adding">
+			<form action="/" method="POST" style="margin:2%;">
+				<input type="text" name="content" id="content">
+				<input type="submit" value="Add Task">
+			</form>
+		</div>	
+		
+		{% if tasks|length < 1 %}
+			<h2 style="padding-top: 10px;">Yay! You have no Incomplete Tasks</h2>
+		{% else %}
+			<div class="tasks">
+				<table align="center">
+					<tr>
+						<th>Task</th>
+						<th>Added On</th>
+						<th>Actions</th>
+					</tr>
+					{% for task in tasks %}
+						<tr>
+							<td>{{ task.content }}</td>
+							<td>{{ task.date_created.date() }}</td>
+							<td>
+								<button><a href="/delete/{{ task.id }}">Delete</a></button>
+								<button><a href="/update/{{ task.id }}">Update</a></button>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+		{% endif %}
+
+	</div>
+{% endblock %}
